@@ -7,8 +7,20 @@ on:
   pull_request:    
     branches: [master]    
     types: [opened, synchronize]
+  schedule:
+    - cron: '2 * * * *'
 
 jobs:
+    health_check:
+      runs-on: ubuntu-20.04
+      if: github.event.schedule != '2 * * * *'
+      steps:
+        - name: Check the deployed service URL
+          uses: jtalk/url-health-check-action@v3
+          with:
+            # Check the following URLs one by one sequentially
+            url: https://example.com|http://example.com
+
     simple_deployment_pipeline:
         runs-on: ubuntu-20.04
         steps:
@@ -30,7 +42,7 @@ jobs:
               command: npm run test:e2e
               start: npm run start-prod
               wait-on: http://localhost:5000
-          - name: Build failed
+          - name: Tests failed
             uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
             if: ${{ failure() }}
             with:
@@ -54,7 +66,12 @@ jobs:
             description: New version of Pokedex deployed
             severity: info
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
+        - name: Build failed
+          uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+          if: ${{ failure() }}
+          with:
+            description: Commit ${{ github.server_url}}/${{ github.repository }}/commit/${{ github.sha }} by ${{ github.repository_owner }} failed to deploy
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     tag_release:
       runs-on: ubuntu-20.04
       if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')}}
