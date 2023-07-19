@@ -43,18 +43,14 @@ jobs:
             api-key: ${{ secrets.RENDER_API_KEY }}
         - name: Build successfull
           uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
-          if: success()
+          if: ${{ success() }}
           with:
             severity: info
-            description: A new version of Pokedex deployed
-            details: 
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
         - name: Build failed
           uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
-          if: failure()
+          if: ${{ failure() }}
           with:
-            severity: error
-            description: Build failed
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     tag_release:
       runs-on: ubuntu-20.04
