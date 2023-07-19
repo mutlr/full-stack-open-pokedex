@@ -30,7 +30,13 @@ jobs:
               command: npm run test:e2e
               start: npm run start-prod
               wait-on: http://localhost:5000
-
+          - name: Build failed
+            uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+            if: ${{ failure() }}
+            with:
+              description: Commit ${{ github.server_url}}/${{ github.repository }}/commit/${{ github.sha }} by ${{ github.repository_owner }} broke the build
+              webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          
     build:
       runs-on: ubuntu-latest
       if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
@@ -48,12 +54,7 @@ jobs:
             description: New version of Pokedex deployed
             severity: info
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-        - name: Build failed
-          uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
-          if: ${{ failure() }}
-          with:
-            description: Commit ${{ github.server_url}}/${{ github.repository }}/commit/${{ github.sha }} by ${{ github.repository_owner }} broke the build
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
     tag_release:
       runs-on: ubuntu-20.04
       if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')}}
