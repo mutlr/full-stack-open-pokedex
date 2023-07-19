@@ -19,6 +19,21 @@ jobs:
           with:
             # Check the following URLs one by one sequentially
             url: https://pokemon-a5b5.onrender.com/health
+        - name: Health check failed
+          uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+          if: ${{ failure() }}
+          with:
+            description: Health check failed!
+        
+        - name: Health check success
+          uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+          if: ${{ success() }}
+          with:
+            severity: info
+            description: Health check success
+
+
+          
 
     simple_deployment_pipeline:
         runs-on: ubuntu-20.04
