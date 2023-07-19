@@ -20,6 +20,7 @@ jobs:
           with:
             # Check the following URLs one by one sequentially
             url: https://pokemon-a5b5.onrender.com/health
+            echo: hello
 
     simple_deployment_pipeline:
         runs-on: ubuntu-20.04
