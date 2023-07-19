@@ -45,12 +45,14 @@ jobs:
           uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
           if: ${{ success() }}
           with:
+            description: New version of Pokedex deployed
             severity: info
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
         - name: Build failed
           uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
           if: ${{ failure() }}
           with:
+            description: Commit ${{ github.server_url}}/${{ github.repository }}/commit/${{ github.sha }} by ${{ github.repository_owner }} broke the build
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     tag_release:
       runs-on: ubuntu-20.04
