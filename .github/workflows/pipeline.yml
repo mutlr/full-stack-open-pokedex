@@ -13,7 +13,6 @@ on:
 jobs:
     health_check:
       runs-on: ubuntu-20.04
-      if: ${{ github.event_name == 'schedule' }}
       steps:
         - name: Check the deployed service URL
           uses: jtalk/url-health-check-action@v3
