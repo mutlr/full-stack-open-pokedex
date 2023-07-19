@@ -42,7 +42,7 @@ jobs:
             service-id: ${{ secrets.RENDER_SERVICE_ID }}
             api-key: ${{ secrets.RENDER_API_KEY }}
         - name: Build successfull
-          uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a311
+          uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
           if: success()
           with:
             severity: info
@@ -50,7 +50,7 @@ jobs:
             details: 
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
         - name: Build failed
-          uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a311
+          uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
           if: failure()
           with:
             severity: error
