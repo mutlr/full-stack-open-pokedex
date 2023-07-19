@@ -20,7 +20,8 @@ jobs:
           with:
             # Check the following URLs one by one sequentially
             url: https://pokemon-a5b5.onrender.com/health
-            echo: hello
+            run:
+              echo hello
 
     simple_deployment_pipeline:
         runs-on: ubuntu-20.04
@@ -66,7 +67,7 @@ jobs:
           with:
             description: New version of Pokedex deployed
             severity: info
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOKK }}
         - name: Build failed
           uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
           if: ${{ failure() }}
