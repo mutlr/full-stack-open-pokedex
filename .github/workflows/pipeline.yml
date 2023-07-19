@@ -8,20 +8,17 @@ on:
     branches: [master]    
     types: [opened, synchronize]
   schedule:
-    - cron: '2 * * * *'
+    - cron: '*/2 * * * *'
 
 jobs:
     health_check:
       runs-on: ubuntu-20.04
-      if: github.event.schedule != '2 * * * *'
       steps:
         - name: Check the deployed service URL
           uses: jtalk/url-health-check-action@v3
           with:
             # Check the following URLs one by one sequentially
             url: https://pokemon-a5b5.onrender.com/health
-            run:
-              echo hello
 
     simple_deployment_pipeline:
         runs-on: ubuntu-20.04
