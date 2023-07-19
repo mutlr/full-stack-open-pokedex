@@ -64,7 +64,7 @@ jobs:
           with:
             description: New version of Pokedex deployed
             severity: info
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOKK }}
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
         - name: Build failed
           uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
           if: ${{ failure() }}
