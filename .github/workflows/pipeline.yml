@@ -33,11 +33,8 @@ jobs:
           if: ${{ success() }}
           with:
             severity: info
-            description: Health check success
+            description: Health check success. Bye!
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
-
-          
 
     simple_deployment_pipeline:
         runs-on: ubuntu-20.04
